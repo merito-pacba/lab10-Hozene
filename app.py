@@ -17,22 +17,24 @@ cursor = conn.cursor()
 app = Flask(__name__)
 
 
-@app.route('/index')
+@app.route('/')
 def index():
-   user_id = 1
-
-   query = """
-        SELECT t.id, t.amount, t.description, t.date, c.name AS category_name
-        FROM Transactions t
-        JOIN Categories c ON t.category_id = c.id
-        WHERE t.user_id = ?
-        ORDER BY t.date DESC
-        LIMIT 10;
-    """
-   cursor.execute(query, user_id)
-   transactions = cursor.fetchall()
-   return render_template('index.html', transactions)
+   try:
+      query = """
+         SELECT TOP 10 t.amount, t.description, t.date, c.name AS category_name
+         FROM Transactions AS t
+         JOIN Categories AS c ON t.category_id = c.id
+         WHERE t.user_id = 1
+         ORDER BY t.date DESC;
+      """
+      cursor.execute(query)
+      transactions = cursor.fetchall()
+      return render_template('index.html', transactions=transactions)
+   except Exception as e:
+      # This will log any database or query-related error to the console
+      print(f"Error: {e}")
+      return "An error occurred while fetching the transactions."
 
 
 if __name__ == '__main__':
-   app.run(debug=True)
+   app.run()
