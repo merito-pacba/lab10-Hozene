@@ -5,7 +5,15 @@
 </head>
 <html>
    <body>
-     <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('transactions') }}">Transaction History</a></li>
+        <li><a href="#">View Reports</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </div>
+    <div class="container">
       {% if transactions %}
       <table>
         <thead>
@@ -30,15 +38,6 @@
       {% else %}
         <p>No transactions found.</p>
       {% endif %}
-      <aside class="sidebar">
-        <ul>
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li><a href="{{ url_for('transactions') }}">Transaction History</a></li>
-          <li><a href="#">Add Transaction</a></li>
-          <li><a href="#">View Reports</a></li>
-          <li><a href="#">Settings</a></li>
-        </ul>
-      </aside>
     </div>      
    </body>
 </html>

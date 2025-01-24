@@ -16,12 +16,12 @@
       <li><a href="#">Settings</a></li>
     </ul>
   </div>
-  <div class="content">
+  <div class="container">
     <h1>Welcome, User!</h1>
     <p>Here's your spending breakdown over the past 30 days:</p>
-    
-    <canvas id="categoryPieChart" width="400" height="400"></canvas>
-
+    <div class="chart-container">
+      <canvas id="categoryPieChart"></canvas>
+    </div>
   </div>
   <script src="{{ url_for('static', filename='chart.js') }}"></script>
 </body>
