@@ -28,6 +28,30 @@
     </div>
     <p>In total you've spent {{ total }} in the last 30 days.</p>
   </div>
+  <div class="add-transaction-form">
+    <h2>Add a Transaction</h2>
+    <form action="/add_transaction" method="POST">
+      <label for="amount">Amount:</label>
+      <input type="number" name="amount" placeholder="Enter amount" required>
+
+      <label for="category_id">Category:</label>
+      <select name="category_id" required>
+        <option value="1">Groceries</option>
+        <option value="2">Rent</option>
+        <option value="3">Salary</option>
+        <option value="4">Entertainment</option>
+        <option value="5">Utilities</option>
+      </select>
+
+      <label for="description">Description:</label>
+      <input type="text" name="description" placeholder="Enter description" required>
+
+      <label for="date">Date:</label>
+      <input type="date" name="date" required>
+
+      <button type="submit">Add Transaction</button>
+    </form>
+  </div>
   <script src="{{ url_for('static', filename='chart.js') }}"></script>
 </body>
 </html>
