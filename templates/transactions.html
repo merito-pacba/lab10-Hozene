@@ -9,12 +9,18 @@
       <ul>
         <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><a href="{{ url_for('transactions') }}">Transaction History</a></li>
-        <li><a href="#">View Reports</a></li>
-        <li><a href="#">Settings</a></li>
       </ul>
+      <div class="ad-container">
+        <video autoplay muted>
+          <source src="{{ url_for('static', filename='ads/' + selected_ad) }}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
     <div class="container">
+
       {% if transactions %}
+      <h2>Last 25 Transactions</h2>
       <table>
         <thead>
           <tr>
