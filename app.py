@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import pyodbc
-from flask import (Flask, redirect, render_template, request, send_from_directory, url_for)
+from flask import (Flask, render_template, request)
 
 load_dotenv()
 
@@ -39,22 +39,23 @@ def transactions():
       print(f"Error: {e}")
       return "An error occurred while fetching the transactions."
 
-@app.route('/api/category-spending')
-def category_spending():
+@app.route('/api/expenses')
+def get_expenses():
    query = """
       SELECT c.name AS category_name, SUM(t.amount) AS total_spent
       FROM Transactions t
       JOIN Categories c ON t.category_id = c.id
-      WHERE t.user_id = 1 AND t.date >= DATEADD(DAY, -30, GETDATE())
+      WHERE t.user_id = 1 AND c.type != 'Income' AND t.date >= DATEADD(day, -30, GETDATE())
       GROUP BY c.name
    """
    cursor.execute(query)
-   results = cursor.fetchall()
+   transactions = cursor.fetchall()
 
-   labels = [row.category_name for row in results]  # Category names
-   values = [row.total_spent for row in results]    # Corresponding amounts
+   labels = [row.category_name for row in transactions]  # Category names
+   values = [row.total_spent for row in transactions]    # Corresponding amounts
 
    return {"labels": labels, "values": values}
+
 
 if __name__ == '__main__':
    app.run()
