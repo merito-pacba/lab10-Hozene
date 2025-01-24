@@ -168,7 +168,7 @@ def login():
       username = request.form['username']
       password = request.form['password']
 
-      query = "SELECT * FROM Users WHERE username = ? AND password = ?"
+      query = "SELECT id FROM Users WHERE username = ? AND password = ?"
       cursor.execute(query, (username, password))
       user = cursor.fetchone()
 
