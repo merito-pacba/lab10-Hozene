@@ -18,7 +18,7 @@ cursor = conn.cursor()
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/index')
 def index():
 
    ads = ['ad1.mp4', 'ad2.mp4', 'ad3.mp4', 'ad4.mp4']
@@ -161,5 +161,24 @@ def edit_transaction(transaction_id):
       return redirect('/transactions')
     
 
+@app.route('/', methods=['GET', 'POST'])
+def login():
+   message = None
+   if request.method == 'POST':
+      username = request.form['username']
+      password = request.form['password']
+
+      query = "SELECT * FROM Users WHERE username = ? AND password = ?"
+      cursor.execute(query, (username, password))
+      user = cursor.fetchone()
+
+      if user:
+         return redirect('/index')
+      else:
+         message = "Invalid username or password. Please try again."
+
+   return render_template('login.html', message=message)
+
+
 if __name__ == '__main__':
-   app.run(host='0.0.0.0',port=5000,debug=True)
+   app.run()
