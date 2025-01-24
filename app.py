@@ -115,45 +115,50 @@ def fetch_categories():
 
 @app.route('/edit_transaction/<int:transaction_id>', methods=['GET', 'POST'])
 def edit_transaction(transaction_id):
-    if request.method == 'GET':
-        query = """
-            SELECT t.amount, t.description, t.date, c.id AS category_id, c.name AS category_name
-            FROM Transactions t
-            JOIN Categories c ON t.category_id = c.id
-            WHERE t.id = ?
-        """
-        cursor.execute(query, transaction_id)
-        transaction = cursor.fetchone()
-        
-        if not transaction:
-            return "Transaction not found.", 404
+    
+   ads = ['ad1.mp4', 'ad2.mp4', 'ad3.mp4', 'ad4.mp4']
+   selected_ad = random.choice(ads)
 
-        return render_template(
-            'edit_transaction.html',
-            transaction_id=transaction_id,
-            amount=transaction.amount,
-            description=transaction.description,
-            date=transaction.date,
-            category_id=transaction.category_id,
-            category_name=transaction.category_name,
-            categories=fetch_categories()
-        )
+   if request.method == 'GET':
+      query = """
+         SELECT t.amount, t.description, t.date, c.id AS category_id, c.name AS category_name
+         FROM Transactions t
+         JOIN Categories c ON t.category_id = c.id
+         WHERE t.id = ?
+      """
+      cursor.execute(query, transaction_id)
+      transaction = cursor.fetchone()
+      
+      if not transaction:
+         return "Transaction not found.", 404
 
-    elif request.method == 'POST':
-        new_amount = request.form['amount']
-        new_description = request.form['description']
-        new_date = request.form['date']
-        new_category_id = request.form['category_id']
+      return render_template(
+         'edit_transaction.html',
+         transaction_id=transaction_id,
+         amount=transaction.amount,
+         description=transaction.description,
+         date=transaction.date,
+         category_id=transaction.category_id,
+         category_name=transaction.category_name,
+         categories=fetch_categories(),
+         selected_ad=selected_ad
+      )
 
-        query = """
-            UPDATE Transactions
-            SET amount = ?, description = ?, date = ?, category_id = ?
-            WHERE id = ?
-        """
-        cursor.execute(query, (new_amount, new_description, new_date, new_category_id, transaction_id))
-        conn.commit()
+   elif request.method == 'POST':
+      new_amount = request.form['amount']
+      new_description = request.form['description']
+      new_date = request.form['date']
+      new_category_id = request.form['category_id']
 
-        return redirect('/transactions')
+      query = """
+         UPDATE Transactions
+         SET amount = ?, description = ?, date = ?, category_id = ?
+         WHERE id = ?
+      """
+      cursor.execute(query, (new_amount, new_description, new_date, new_category_id, transaction_id))
+      conn.commit()
+
+      return redirect('/transactions')
     
 
 if __name__ == '__main__':
