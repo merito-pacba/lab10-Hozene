@@ -1,36 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Hello Azure - Python Quickstart</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<html>
-   <body>
-     <main>
-      {% if transactions %}
-      <table>
-        <thead>
-          <tr>
-            <th>Amount</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for transaction in transactions %}
-            <tr>
-              <td>{{ transaction.amount }}</td>
-              <td>{{ transaction.description }}</td>
-              <td>{{ transaction.date }}</td>
-              <td>{{ transaction.category_name }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-        <p>No transactions found.</p>
-      {% endif %}
-     </main>      
-   </body>
+<body>
+  <div class="container">
+    <header>
+      <h1>Welcome, User!</h1>
+      <p>The category you've spent the most on in the last 30 days is <strong>{{ max_category }}</strong>.</p>
+    </header>
+    <main>
+      <canvas id="categoryPieChart" width="400" height="400"></canvas>
+    </main>
+    <aside class="sidebar">
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('transactions') }}">Transaction History</a></li>
+        <li><a href="#">View Reports</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </aside>
+  </div>
+  <script src="{{ url_for('static', filename='chart.js') }}"></script>
+</body>
 </html>
