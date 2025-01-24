@@ -1,3 +1,5 @@
 Flask
+gunicorn
+Werkzeug==2.2.2
 python_dotenv
 pyodbc
