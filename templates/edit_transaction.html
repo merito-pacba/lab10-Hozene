@@ -17,12 +17,12 @@
         </video>
       </div>
     </div>
-    <div class="container_transactions">
+    <div class="add-transaction-form">
         <h1>Edit Transaction</h1>
         <form method="POST">
             <div class="form-row">
                 <label for="amount">Amount:</label>
-                <input type="number" id="amount" name="amount" value="{{ amount }}" required>
+                <input type="number" step="0.01" id="amount" name="amount" value="{{ amount }}" required>
             </div>
             <div class="form-row">
                 <label for="description">Description:</label>
@@ -46,7 +46,8 @@
                 <button type="submit">Update Transaction</button>
             </div>
         </form>
-        <a href="/transactions" class="back-link">Back to Transactions</a>
+        <a href="/transactions" style="text-decoration: none;">
+            <button class="delete-button" style="background-color: red;">Back to Transactions</button></a>
     </div>      
    </body>
 </html>
